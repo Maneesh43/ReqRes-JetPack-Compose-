@@ -7,14 +7,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.maneesh.reqresandroid.network.APIService
-import com.example.reqres.network.models.UserClass
+import com.maneesh.reqresandroid.network.models.UserClass
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
     var userList: List<UserClass> by mutableStateOf(listOf())
     var errorMessage: String by mutableStateOf("")
-    var userWithID: UserClass by mutableStateOf(UserClass("", "", "", "", ""))
+    var userWithID: UserClass by mutableStateOf(UserClass())
 
     fun getUsers() {
         viewModelScope.launch {
@@ -35,7 +35,7 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             val service = APIService.getInstance()
             try {
-                val user = service.getUser(id)
+                val user = service.getUser(id).data
                 userWithID = user
             } catch (e: CancellationException) {
                 throw e
