@@ -1,9 +1,7 @@
 package com.maneesh.reqresandroid.composables
 
-import android.widget.ImageButton
 import androidx.compose.foundation.Image
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -12,15 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.maneesh.reqresandroid.Routes
+import com.maneesh.reqresandroid.ui.theme.TangyOrange
 
-class Composables{
+class CustomComposables{
 
     companion object{
         @Composable
         fun CustomTopAppBar(title:String,state:Int,navController: NavController){
-            TopAppBar(title = { Text(text = title)}, backgroundColor = MaterialTheme.colors.primaryVariant,
+            TopAppBar(title = { Text(text = title, color = Color.White)}, backgroundColor = TangyOrange,
             navigationIcon = {
                 if(state!=0){
                     IconButton(onClick = {navController.navigateUp()}) {

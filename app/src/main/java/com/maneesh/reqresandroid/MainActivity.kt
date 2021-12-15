@@ -14,14 +14,17 @@ import com.maneesh.reqresandroid.ui.theme.ReqresandroidTheme
 
 class MainActivity : ComponentActivity() {
 
-    val mainViewModel by viewModels<MainViewModel>()
+//    ViewModel updates view when there is change in data
+ val mainViewModel by viewModels<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ReqresandroidTheme {
                 // A surface container using the 'background' color from the theme
+//                Launching the First Screen on load
                 Surface(color = MaterialTheme.colors.background) {
-                   Screen1().FirstScreen(mainViewModel = mainViewModel)
+                    Screen1().FirstScreen(mainViewModel = mainViewModel)
                 }
             }
         }
@@ -29,13 +32,18 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
-
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     ReqresandroidTheme {
-        Screen1().UserCard(useritem = UserClass("1", "Maneesh", "Reddy", "Regg", "https://www.google.ca"), navController = rememberNavController())
+        Screen1().UserCard(
+            useritem = UserClass(
+                "1",
+                "Maneesh",
+                "Reddy",
+                "Regg",
+                "https://www.google.ca"
+            ), navController = rememberNavController()
+        )
     }
 }

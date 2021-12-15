@@ -15,26 +15,30 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
-import com.maneesh.reqresandroid.composables.Composables
+import com.maneesh.reqresandroid.composables.CustomComposables
 import com.maneesh.reqresandroid.network.models.UserClass
 import com.maneesh.reqresandroid.ui.theme.ReqresandroidTheme
 
 class Screen2 {
 
     @Composable
-    fun showUserDetails(id: String, viewModel: MainViewModel, navcontroller: NavController) {
+    fun ShowUserDetails(id: String, viewModel: MainViewModel, navcontroller: NavController) {
         ShowUser(viewModel.userWithID, navcontroller)
         viewModel.getUserID(id)
     }
 
+//This composable is responsible for showing individual user information
 
     @Composable
     fun ShowUser(item: UserClass, navController: NavController) {
+
+//        Handling back pressed in Back Handler and calling navigation compose navigateUp() to move to previous screen
         BackHandler(enabled = true) {
             navController.navigateUp()
         }
+//        Scaffold to contain topabbbar and app Content
         Scaffold(
-            topBar = {Composables.CustomTopAppBar("${item.firstName} ${item.lastName}",1, navController = navController) },
+            topBar = {CustomComposables.CustomTopAppBar("${item.firstName} ${item.lastName}",1, navController = navController) },
             content = {
             if (item.id.isNotEmpty()) {
                 Surface() {
@@ -71,8 +75,11 @@ class Screen2 {
         })
 
     }
+//
 
-    @Preview(showBackground = true)
+
+//    Preview Composable for quickly looking at the layout
+    @Preview(showBackground = true, showSystemUi = true)
     @Composable
     fun DefaultPreview() {
         ReqresandroidTheme {
