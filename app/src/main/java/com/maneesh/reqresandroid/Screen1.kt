@@ -1,13 +1,13 @@
 package com.maneesh.reqresandroid
 
-import android.widget.ImageButton
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,12 +17,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
-import com.maneesh.reqresandroid.composables.Composables
+import com.maneesh.reqresandroid.composables.CustomComposables
 import com.maneesh.reqresandroid.network.models.UserClass
 
 class Screen1 {
     @Composable
     fun FirstScreen(mainViewModel: MainViewModel) {
+
+//        Instantiating navController and setting up the NavHost for moving between different composables
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = Routes.UsersView.route) {
             composable(Routes.UsersView.route) {
@@ -31,19 +33,30 @@ class Screen1 {
             }
             composable(Routes.UserView.route + "/{id}") { navBackStack ->
                 val id = navBackStack.arguments?.getString("id")
-                Screen2().showUserDetails(id = id!!, viewModel = mainViewModel, navController)
+                Screen2().ShowUserDetails(id = id!!, viewModel = mainViewModel, navController)
             }
         }
     }
+//
+
 
     @Composable
     fun ShowUsers(list: List<UserClass>, navController: NavController) {
-        Scaffold(
 
-            topBar = { Composables.CustomTopAppBar("ReqRes Android", 0, navController = navController) },
+//        Using Scaffold to contain topAppBar
+        Scaffold(
+            topBar = {
+                CustomComposables.CustomTopAppBar(
+                    "ReqRes Android",
+                    0,
+                    navController = navController
+                )
+            },
 
             content = {
                 if (list.isNotEmpty()) {
+//                    Using Lazycolumn for iterating over the list this is equivalent to RecyclerView
+//    itemsIndexed is a special type of lazy column which gives us access to the index
                     LazyColumn {
                         itemsIndexed(items = list) { index, item ->
                             UserCard(useritem = item, navController)
@@ -58,6 +71,7 @@ class Screen1 {
 
     @Composable
     fun UserCard(useritem: UserClass, navController: NavController) {
+//        Basic Card Layout in compose
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
